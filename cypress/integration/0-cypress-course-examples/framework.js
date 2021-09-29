@@ -1,8 +1,8 @@
 /// <reference types="Cypress" />
-import homePage from '../pageObjects/homePage.js'
-import productsPage from '../pageObjects/productsPage'
-import summaryPage from '../pageObjects/summaryPage'
-import checkoutPage from '../pageObjects/checkoutPage'
+import homePage from '../../support/pageObjects/homePage'
+import productsPage from '../../support/pageObjects/productsPage'
+import summaryPage from '../../support/pageObjects/summaryPage'
+import checkoutPage from '../../support/pageObjects/checkoutPage'
 
 describe('shop unit tests', () => {
 
@@ -15,7 +15,7 @@ describe('shop unit tests', () => {
         cy.fixture('example.json').then(function(testData){
             globalThis.data=testData
         })
-        cy.visit('https://rahulshettyacademy.com/angularpractice/')                   
+        cy.visit(Cypress.env('url'))                 
     })
 
     
@@ -67,29 +67,33 @@ describe('shop unit tests', () => {
 
     })
 
-    it.only('compare sum of products to total amount in summary page', () =>{
+    it('compare sum of products to total amount in summary page', () =>{
         var productsSum = 0
         homeP.getShopBtn().click()
         cy.addDeviceByName('iphone X')
         cy.addDeviceByName('Samsung Note 8')
         productsP.getCheckOutBtn().click()
+
+        //convert products prices to int and sum those integeres
         summaryP.getProductsTotalPrice().each(($el,index,list)=>{
             const priceTxt = $el.text()
             var priceTxtSplit = priceTxt.split(" ")
             priceTxtSplit = priceTxtSplit[1].trim()
             var priceInt = parseInt(priceTxtSplit)
-            productsSum = productsSum + priceInt
-            cy.log(productsSum)
+            productsSum = productsSum + priceInt            
         })
+        //*convert products prices to int and sum those integeres
+
+        //convert total amount order to int and comapre it to products sum
         summaryP.getTotalPrice().then(function(el){
             const totalPriceTxt = el.text()
             var totalPriceTxtSplit = totalPriceTxt.split(" ")
             totalPriceTxtSplit = totalPriceTxtSplit[1].trim()
             var totalPriceInt = parseInt(totalPriceTxtSplit)
-            cy.log(totalPriceInt)
             expect(productsSum).to.equal(totalPriceInt)
-
         })
+        //*convert total amount order to int and comapre it to products sum
+
        
     })
 })

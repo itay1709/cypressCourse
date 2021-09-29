@@ -25,7 +25,7 @@ describe('My First Test Suite', () => {
         cy.get('.brand').should('have.text', 'GREENKART')
   })
 
-  it.only('test no. 3', () =>{
+  it('test no. 3', () =>{
     cy.visit("https://rahulshettyacademy.com/seleniumPractise/#/")
     cy.wait(2000)
     cy.get('.products .product').each(($el, index, $list)=>{
