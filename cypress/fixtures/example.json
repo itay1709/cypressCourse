@@ -1,0 +1,6 @@
+{
+  "name": "itay",
+  "gender": "Female",
+  "device": ["iphone X", "Samsung Note 8", "Nokia Edge", "Blackberry"],
+  "successMsg": "Thank you! Your order will be delivered in next few weeks :-)"
+}
